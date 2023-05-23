@@ -12,7 +12,7 @@ class HttpHelper {
 
     if(response.statusCode == HttpStatus.ok) {
       final jsonResponse = json.decode(response.body);
-      final List<Map<String,dynamic>> albumsMap = jsonResponse['loved'];  
+      final List<dynamic> albumsMap = jsonResponse['loved'];  
       final List<Album> albums = albumsMap.map((map) => Album.fromJson(map)).toList();
       return albums;
     } else {
