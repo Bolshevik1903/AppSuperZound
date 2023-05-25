@@ -47,7 +47,10 @@ class TrackItem extends StatefulWidget {
   final Track track;
 
   @override
-  State<TrackItem> createState() => _TrackItemtate();
+  State<TrackItem> createState() => _TrackItemState();
 }
 
-class _TrackItemtate {}
+class _TrackItemState extends State<TrackItem> {
+  @override
+  Widget Build(),
+}
