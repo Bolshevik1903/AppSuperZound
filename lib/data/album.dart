@@ -25,7 +25,7 @@ class Album {
       'id': id,
       'name': name,
       'artist': artist,
-      'yaer': yearReleased,
+      'year': yearReleased,
       'poster': urlPoster
     };
   }

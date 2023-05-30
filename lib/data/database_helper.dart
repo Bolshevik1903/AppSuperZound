@@ -1,7 +1,6 @@
 import 'package:music_flutter/data/album.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:sqflite/sqlite_api.dart';
 
 class DbHelper {
   final int version = 1;
@@ -11,8 +10,11 @@ class DbHelper {
   Database? db;
   
   Future<Database> openDb() async {
-    db ??= await openDatabase(join(await getDatabasesPath(), databaseName), onCreate: (database, version) {
-      database.execute('create tabe $databaseName (id text primary key, name text, artist txt, year text, poster text)');
+    db ??= await openDatabase(
+      join(await getDatabasesPath(), databaseName), 
+      onCreate: (database, version) {
+        database.execute(
+          'create table $tableName (id text primary key, name text, artist text, year text, poster text)');
     },
     version: version,
     );
@@ -28,7 +30,7 @@ class DbHelper {
   }
 
   Future<bool> isFavorite(Album album) async {
-    final maps = await db?.query(tableName,where: "id=?", whereArgs: [album.id]);
+  final maps = await db?.query(tableName,where: 'id=?', whereArgs: [album.id]);
     return maps!.isNotEmpty;
   }
 }

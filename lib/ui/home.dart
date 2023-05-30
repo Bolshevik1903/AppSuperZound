@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:music_flutter/data/database_helper.dart';
 import 'package:music_flutter/ui/track_list.dart';
 
 import '../data/album.dart';
@@ -55,6 +56,23 @@ class AlbumItem extends StatefulWidget {
 
 class _AlbumItemState extends State<AlbumItem> {
   bool isFavorite = false;
+  DbHelper? dbHelper;
+
+  @override
+  void initState() {
+    dbHelper = DbHelper();
+    isFavoriteAlbum();
+    super.initState();
+  }
+
+  isFavoriteAlbum() async {
+    await dbHelper?.openDb();
+    final result = await dbHelper?.isFavorite(widget.album);
+    setState(() {
+      isFavorite = result!;
+    });
+  }
+    
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +89,9 @@ class _AlbumItemState extends State<AlbumItem> {
         leading: Image(image: NetworkImage(widget.album.urlPoster!)),
         trailing: IconButton(
           onPressed: () {
+            isFavorite
+                ? dbHelper?.delete(widget.album)
+                : dbHelper?.insert(widget.album);
             setState(() {
               isFavorite = !isFavorite;
             });
