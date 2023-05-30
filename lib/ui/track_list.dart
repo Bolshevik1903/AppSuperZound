@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:music_flutter/data/album.dart';
 import 'package:music_flutter/data/http_helper.dart';
-import 'package:music_flutter/data/track.dart';
+
+import '../data/album.dart';
+import '../data/track.dart';
 
 class TrackList extends StatefulWidget {
   const TrackList({super.key, required this.album});
   final Album album;
 
   @override
-  State<StatefulWidget> createState() => _TrackListState();
+  State<TrackList> createState() => _TrackListState();
 }
 
 class _TrackListState extends State<TrackList> {
-  HttpHelper? httpHelper;
   List<Track>? tracks;
+  HttpHelper? httpHelper;
 
   Future initialize() async {
     tracks = List.empty();
@@ -33,11 +34,30 @@ class _TrackListState extends State<TrackList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.builder(
-          itemCount: tracks?.length,
-          itemBuilder: (context, index) {
-            return TrackItem(tracks![index]);
-          }),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            stretch: true,
+            pinned: true,
+            title: Text(widget.album.name!),
+            flexibleSpace: FlexibleSpaceBar(
+                background: SizedBox(
+              child: Column(
+                children: [
+                  Image(image: NetworkImage(widget.album.urlPoster!)),
+                  Text(widget.album.artist!)
+                ],
+              ),
+            )),
+            expandedHeight: 200,
+          ),
+          SliverList.builder(
+              itemCount: tracks?.length,
+              itemBuilder: (context, index) {
+                return TrackItem(track: tracks![index]);
+              })
+        ],
+      ),
     );
   }
 }
@@ -52,5 +72,12 @@ class TrackItem extends StatefulWidget {
 
 class _TrackItemState extends State<TrackItem> {
   @override
-  Widget Build(),
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        title: Text(widget.track.name!),
+        subtitle: Text(widget.track.duration!),
+      ),
+    );
+  }
 }

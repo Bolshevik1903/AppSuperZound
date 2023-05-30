@@ -1,15 +1,11 @@
-class Track{
+class Track {
   String? id;
   String? name;
-  String? duration;
+  String? duration; 
 
-  Track({
-    required this.id,
-    required this.name,
-    required this.duration
-  });
+  Track({required this.id, required this.name, required this.duration});
 
-  Track.fromJson(Map<String, dynamic> json) {
+  Track.fromJson(Map<String, dynamic> json){
     id = json['idTrack'];
     name = json['strTrack'];
     duration = json['intDuration'];
