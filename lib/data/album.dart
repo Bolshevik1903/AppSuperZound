@@ -19,6 +19,14 @@ class Album {
     yearReleased = json['intYearReleased'];
     urlPoster = json['strAlbumThumb'];
   }
+
+    Album.fromMap(Map<String, dynamic> map){
+    id = map['id'];
+    name = map['name'];
+    artist = map['artist'];
+    yearReleased = map['year'];
+    urlPoster = map['poster'];
+  }
   
   Map<String, dynamic> toMap() {
     return {
